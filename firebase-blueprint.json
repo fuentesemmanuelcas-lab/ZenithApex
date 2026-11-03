@@ -1,0 +1,152 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "User Profile",
+      "description": "Operator profile root data",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid"]
+    },
+    "userFile": {
+      "title": "User File",
+      "description": "Uploaded operator document or note attached to user workspace",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique file identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Original file name"
+        },
+        "storagePath": {
+          "type": "string",
+          "description": "Firebase Cloud Storage path"
+        },
+        "downloadURL": {
+          "type": "string",
+          "description": "Direct download or preview URL"
+        },
+        "size": {
+          "type": "number",
+          "description": "File size in bytes"
+        },
+        "type": {
+          "type": "string",
+          "description": "MIME type"
+        },
+        "folderId": {
+          "type": "string",
+          "description": "Optional parent folder identifier"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of creation"
+        },
+        "content": {
+          "type": "string",
+          "description": "Raw text content for notes and text documents"
+        },
+        "extractedText": {
+          "type": "string",
+          "description": "Extracted text payload"
+        },
+        "contentSnippet": {
+          "type": "string",
+          "description": "Short preview snippet of text"
+        },
+        "isNote": {
+          "type": "boolean",
+          "description": "Flag indicating if document is an operator note"
+        }
+      },
+      "required": ["id", "name", "storagePath", "downloadURL", "size", "type", "createdAt"]
+    },
+    "userFolder": {
+      "title": "User Folder",
+      "description": "Virtual folder directory for organizing user files",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Folder display name"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of creation"
+        }
+      },
+      "required": ["name"]
+    },
+    "operatorRecord": {
+      "title": "Operator Record",
+      "description": "Operations tracker pipeline lead and carrier record owned exclusively by this user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "codename": { "type": "string" },
+        "operator": { "type": "string" },
+        "client": { "type": "string" },
+        "depot": { "type": "string" },
+        "stage": { "type": "string" },
+        "status": { "type": "string" },
+        "sla": { "type": "number" },
+        "phone": { "type": "string" },
+        "notes": { "type": "string" },
+        "qc": { "type": "string" },
+        "station": { "type": "string" },
+        "startRow": { "type": "string" },
+        "endRow": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "lastAction": { "type": "string" },
+        "statusChangedAt": { "type": "string" },
+        "notesChangedAt": { "type": "string" },
+        "recordType": { "type": "string" },
+        "address": { "type": "string" }
+      },
+      "required": ["id", "codename", "stage", "status"]
+    },
+    "calendarEvent": {
+      "title": "Calendar Event",
+      "description": "Scheduled operation meeting or ride-along briefing owned exclusively by this user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "string" },
+        "start": { "type": "string" },
+        "end": { "type": "string" }
+      },
+      "required": ["id", "title", "date", "start", "end"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "userProfile",
+      "description": "Root user profile document"
+    },
+    "/users/{userId}/files/{fileId}": {
+      "schema": "userFile",
+      "description": "Personal files uploaded by authenticated operator"
+    },
+    "/users/{userId}/folders/{folderId}": {
+      "schema": "userFolder",
+      "description": "Personal folders managed by authenticated operator"
+    },
+    "/users/{userId}/records/{recordId}": {
+      "schema": "operatorRecord",
+      "description": "Operational registry and pipeline leads owned only by this user"
+    },
+    "/users/{userId}/events/{eventId}": {
+      "schema": "calendarEvent",
+      "description": "Dispatch and operations calendar events owned only by this user"
+    }
+  }
+}
